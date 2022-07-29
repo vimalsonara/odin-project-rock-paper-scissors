@@ -1,54 +1,65 @@
+let playerScore = 0;
+let computerScore = 0;
+const buttons = document.querySelectorAll('input');
+
+
 // function to random rock, paper, scissors as computerplay
 function computerPlay() {
     let choices = ['rock', 'paper', 'scissors'];
     return choices[Math.floor(Math.random() * choices.length)];
 }
 
+function disableButtons() {
+    buttons.forEach(elem => {
+        elem.disabled = true
+    })
+}
+
+
 // function to play roun computer vs. player
-function playRound(playerSelection, ComputerSelection) {
-    let playerPoint = 0;
+function playRound(playerSelection) {
+    let computerSelection = computerPlay();
+    let result = ""
 
-    if((playerSelection === 'rock' && ComputerSelection === 'scissors') ||
-        (playerSelection === 'scissors' && ComputerSelection === 'paper') ||
-        (playerSelection === 'paper' && ComputerSelection === 'rock')) {
+    if((playerSelection === 'rock' && computerSelection === 'scissors') ||
+        (playerSelection === 'scissors' && computerSelection === 'paper') ||
+        (playerSelection === 'paper' && computerSelection === 'rock')) {
 
-            playerPoint =1;
-            console.log('You win! ' + playerSelection + ' beats ' + ComputerSelection);
-        }else {
-            console.log('You lose! ' + ComputerSelection + ' beats ' + playerSelection);
+        playerScore += 1;
+        result = ('You win! ' + playerSelection + ' beats ' + computerSelection
+                    + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+        console.log(`You Win! ` + playerSelection + ` beats ` + computerSelection + 
+                   "Player Score: " + playerScore + "Computer Score: " + computerScore)
+        if(playerScore == 5) {
+            result += '<br><br>You won the game! Reload the page to play again'
+            disableButtons()
         }
 
-        return playerPoint;
-}
+    }
+    else if (playerSelection == computerSelection){
+        result = ('It\'s a tie. You both chose ' + playerSelection
+                  + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+        console.log('It\'s a tie. You both chose ' + playerSelection
+        + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+    }
+    else {
+        computerScore += 1;
+        result = ('You lose! ' + computerSelection + ' beats ' + playerSelection
+                  + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+        console.log('computer Won the Game')
 
-// function play game 5 times 
-function game(roundTotal = 5) {
-    let roundPlayed = 0;
-    let playerScore = 0;
-
-    while (roundPlayed < roundTotal) {
-        let playerSelection = prompt('rock, paper or scissors?');
-        playerSelection = playerSelection.toLowerCase();
-        if((playerSelection != 'rock') &&
-            (playerSelection != 'paper') &&
-            (playerSelection != 'scissors'))
-        { continue }
-
-        let ComputerSelection = computerPlay();
-        if (playerSelection === ComputerSelection) {
-            console.log('It\'s a tie. You both chose ' + playerSelection);
-            continue
+        if (computerScore == 5) {
+            result += '<br><br>I won the game! Reload the page to play again'
+            result += 'I won the game'
+            disableButtons()
         }
-
-        playerScore += playRound(playerSelection, ComputerSelection);
-        roundPlayed++;
     }
-
-    if (playerScore > (roundPlayed / 2)) {
-        console.log('You won ' + playerScore + ' Out of ' + roundPlayed + ' rounds. You win!');
-    } else if (playerScore === (roundPlayed / 2)) {
-        console.log('You won ' + playerScore + 'out of ' + roundPlayed + 'rounds. You tied.');
-    } else {
-        console.log('You won ' + playerScore + ' out of ' + roundPlayed + 'rounds. You lost');
-    }
+    document.getElementById('result').innerHTML = result
+    return
 }
+
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        playRound(button.value)
+    })
+})

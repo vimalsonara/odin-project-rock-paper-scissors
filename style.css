@@ -1,0 +1,48 @@
+body {
+    background-color: #ccc;
+}
+
+.btn-all {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.selection {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 35px;
+    background-color: aquamarine;
+    color: blue;
+    font-weight: bold;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 100ms;
+}
+
+.selection:hover {
+    transform: scale(1.2);
+}
+
+.results {
+    margin: 1rem;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.reset {
+    display: none;
+}
+
+.score {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.tie {
+    display: flex;
+    justify-content: center;
+}
