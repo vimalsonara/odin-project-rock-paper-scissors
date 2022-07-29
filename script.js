@@ -16,7 +16,7 @@ function disableButtons() {
 }
 
 
-// function to play roun computer vs. player
+// function to play round computer vs. player
 function playRound(playerSelection) {
     let computerSelection = computerPlay();
     let result = ""
